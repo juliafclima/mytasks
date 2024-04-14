@@ -1,23 +1,19 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {
   View,
   Text,
   SafeAreaView,
   TextInput,
   TouchableOpacity,
-  FlatList,
-} from "react-native";
+} from 'react-native';
 
-import { styles } from "./style";
-
-interface ITask {
-  id: string;
-  title: string;
-}
+import {useTaskList} from '@/context/TasksContext';
+import {TaskList} from '@/components/TaskList';
+import {styles} from '@/pages/Home/style';
 
 export default function Home() {
-  const [newTasks, setNewTasks] = useState("");
-  const [tasks, setTasks] = useState<ITask[]>([]);
+  const [newTasks, setNewTasks] = useState('');
+  const {addTask} = useTaskList();
 
   const handleAddNewTask = () => {
     const data = {
@@ -25,18 +21,18 @@ export default function Home() {
       title: newTasks,
     };
 
-    setTasks([...tasks, data]);
-    setNewTasks("");
+    setNewTasks('');
+    addTask(data);
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <Text style={styles.text}>Welcome, Dev!</Text>
+        <Text style={styles.text}>Welcome!</Text>
 
         <TextInput
           placeholder="Nova tarefa..."
-          placeholderTextColor={"#555"}
+          placeholderTextColor={'#555'}
           style={styles.input}
           onChangeText={setNewTasks}
           value={newTasks}
@@ -45,23 +41,14 @@ export default function Home() {
         <TouchableOpacity
           onPress={handleAddNewTask}
           activeOpacity={0.7}
-          style={[styles.button, newTasks === "" && styles.disabledButton]}
-          disabled={newTasks === ""}
-        >
+          style={[styles.button, newTasks === '' && styles.disabledButton]}
+          disabled={newTasks === ''}>
           <Text style={styles.buttonText}>Adicionar</Text>
         </TouchableOpacity>
 
         <Text style={styles.titleTasks}>Minhas tarefas</Text>
 
-        <FlatList
-          data={tasks}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <TouchableOpacity style={styles.buttonTask}>
-              <Text style={styles.buttonTaskTitle}>{item.title}</Text>
-            </TouchableOpacity>
-          )}
-        />
+        <TaskList />
       </View>
     </SafeAreaView>
   );
