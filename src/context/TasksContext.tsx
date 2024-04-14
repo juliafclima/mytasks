@@ -39,7 +39,7 @@ export const TasksProvider: React.FC<ITasksProvider> = ({children}) => {
 
   const addTask = async (task: ITask) => {
     try {
-      const newTaskList = [...tasks, task];
+      const newTaskList = [task, ...tasks];
 
       setTasks(newTaskList);
 
@@ -51,6 +51,7 @@ export const TasksProvider: React.FC<ITasksProvider> = ({children}) => {
 
   const removeTask = async (id: string) => {
     try {
+      console.log('clicou');
       const newTaskList = tasks.filter(task => task.id !== id);
 
       setTasks(newTaskList);

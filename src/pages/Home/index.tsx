@@ -10,6 +10,7 @@ import {
 import {useTaskList} from '@/context/TasksContext';
 import {TaskList} from '@/components/TaskList';
 import {styles} from '@/pages/Home/style';
+import {StatusBar} from 'expo-status-bar';
 
 export default function Home() {
   const [newTasks, setNewTasks] = useState('');
@@ -27,6 +28,7 @@ export default function Home() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <StatusBar style="light" />
       <View style={styles.container}>
         <Text style={styles.text}>Welcome!</Text>
 
